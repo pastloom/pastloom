@@ -249,6 +249,8 @@
       footer .wrap{display:grid;gap:10px}
       footer b{color:#f3eedd;font-family:"Playfair Display",serif;font-size:1.15rem}
       footer a{color:#e8c877}
+      footer .browse-all{font-size:1rem;font-weight:700}
+      footer .browse-all a{text-decoration:underline;text-underline-offset:3px}
       footer p{margin:0;font-size:.94rem;max-width:46rem}
       .trust-links{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:8px;padding-top:16px;border-top:1px solid rgba(255,255,255,.16)}
       .trust-links button{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.25);color:#f3eedd;border-radius:999px;padding:9px 16px;cursor:pointer;font-family:inherit;font-size:.93rem;font-weight:600}
@@ -369,7 +371,7 @@
                 <a class="btn-ghost" href="#timeline" style="text-decoration:none;display:inline-flex;align-items:center">World History Timeline →</a>
               </div>
             </div>
-            <p class="lang-note">Our own articles (with the OUR ARTICLE badge) are in English only — this selector changes the language of Wikipedia (External Source) articles.</p>
+            <p class="lang-note">This selector changes the language of Wikipedia (External Source) articles — 348 Wikipedia languages are in the list. Our own articles (with the OUR ARTICLE badge) are written in English; inside any of them, use “Read in your language” for an automatic Google Translate version.</p>
             <div class="chips" id="tryChips">
               <span>Try:</span>
             </div>
@@ -425,7 +427,7 @@
           </div>
         </div>
         <div class="rule"></div>
-        <div class="lib-note"><strong>Language note:</strong> Our own articles are currently in <strong>English only</strong>. The language selector at the top changes the language of Wikipedia (external source) articles — it does not translate our library yet.</div>
+        <div class="lib-note"><strong>Language note:</strong> Our original articles are written in <strong>English</strong>. You can also read them in other languages using the automatic Google Translate option inside each article. These translations are provided by Google Translate and are not human-reviewed Pastloom translations.</div>
         <div class="lib-grid" id="libGrid"></div>
       </section>
 
@@ -521,6 +523,7 @@
         <b>About Pastloom</b>
         <p>Two kinds of articles live here. <strong>Our Library</strong> articles are Pastloom&rsquo;s own — prepared for this site in simple English, researched from published sources and checked before publishing, and marked <strong>OUR ARTICLE</strong>. <strong>External Source</strong> articles are drawn live from <a href="https://www.wikipedia.org" target="_blank" rel="noopener">Wikipedia</a>, the free encyclopedia written by volunteers around the world, under the <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-ShareAlike (CC BY-SA) license</a> — each one links back to its original on Wikipedia, where you can see its authors and history.</p>
         <p id="footNote">This is a history website: every topic here is history or a part of history — people and heroes, countries, wars, civilisations, empires, the history of science, animals in history, inventions and everyday life in the past.</p>
+        <p class="browse-all"><a href="https://pastloom.github.io/pastloom/articles/">Browse all 1,006 articles A–Z</a></p>
         <nav class="trust-links" aria-label="About and policies">
           <button type="button" id="footTimeline">World History Timeline</button>
           <button type="button" data-trust="about">About Pastloom</button>
@@ -564,6 +567,24 @@
 "use strict";
 /* ============ Pastloom — live Wikipedia engine + our library ============ */
 var LANG = "en";
+var WIKI_LANGS = [["en","English","English"],["ab","аԥсшәа","Abkhazian"],["ace","Acèh","Acehnese"],["ady","адыгабзэ","Adyghe"],["aa","Qafár af","Afar"],["af","Afrikaans","Afrikaans"],["ak","Akan","Akan"],["sq","shqip","Albanian"],["gsw","Alemannisch","Alemannic"],["am","አማርኛ","Amharic"],["ami","Pangcah","Amis"],["anp","अंगिका","Angika"],["ar","العربية","Arabic"],["an","aragonés","Aragonese"],["rki","ရခိုင်","Arakanese"],["arc","ܐܪܡܝܐ","Aramaic"],["hy","հայերեն","Armenian"],["rup","armãneashti","Aromanian"],["frp","arpetan","Arpitan"],["as","অসমীয়া","Assamese"],["ast","asturianu","Asturian"],["tay","Tayal","Atayal"],["atj","Atikamekw","Atikamekw"],["av","авар","Avaric"],["awa","अवधी","Awadhi"],["ay","Aymar aru","Aymara"],["az","azərbaycanca","Azerbaijani"],["ban","Basa Bali","Balinese"],["bm","bamanankan","Bambara"],["bn","বাংলা","Bangla"],["bjn","Banjar","Banjar"],["map-bms","Basa Banyumasan","Banyumasan"],["ba","башҡортса","Bashkir"],["eu","euskara","Basque"],["btm","Batak Mandailing","Batak Mandailing"],["bbc","Batak Toba","Batak Toba"],["bar","Boarisch","Bavarian"],["be","беларуская","Belarusian"],["be-tarask","беларуская (тарашкевіца)","Belarusian (Taraškievica orthography)"],["bew","Betawi","Betawi"],["bh","भोजपुरी","Bhojpuri"],["bpy","বিষ্ণুপ্রিয়া মণিপুরী","Bishnupriya"],["bi","Bislama","Bislama"],["bol","bòo pìkkà","Bole"],["bs","bosanski","Bosnian"],["br","brezhoneg","Breton"],["bug","Basa Ugi","Buginese"],["bg","български","Bulgarian"],["my","မြန်မာဘာသာ","Burmese"],["yue","粵語","Cantonese"],["ca","català","Catalan"],["ceb","Cebuano","Cebuano"],["bcl","Bikol Central","Central Bikol"],["dtp","Kadazandusun","Central Dusun"],["knc","Yerwa Kanuri","Central Kanuri"],["ckb","کوردی","Central Kurdish"],["ch","Chamoru","Chamorro"],["cbk-zam","Chavacano de Zamboanga","Chavacano"],["ce","нохчийн","Chechen"],["chr","ᏣᎳᎩ","Cherokee"],["chy","Tsetsêhestâhese","Cheyenne"],["zh","中文","Chinese"],["cho","Chahta anumpa","Choctaw"],["cu","словѣньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ","Church Slavic"],["cv","чӑвашла","Chuvash"],["ksh","Ripoarisch","Colognian"],["kw","kernowek","Cornish"],["co","corsu","Corsican"],["cr","Nēhiyawēwin / ᓀᐦᐃᔭᐍᐏᐣ","Cree"],["crh","qırımtatarca","Crimean Tatar"],["hr","hrvatski","Croatian"],["cs","čeština","Czech"],["dag","dagbanli","Dagbani"],["da","dansk","Danish"],["diq","Zazaki","Dimli"],["din","Thuɔŋjäŋ","Dinka"],["dv","ދިވެހިބަސް","Divehi"],["dty","डोटेली","Doteli"],["nl","Nederlands","Dutch"],["dz","ཇོང་ཁ","Dzongkha"],["mhr","олык марий","Eastern Mari"],["arz","مصرى","Egyptian Arabic"],["eml","emiliàn e rumagnòl","Emiliano-Romagnolo"],["myv","эрзянь","Erzya"],["eo","Esperanto","Esperanto"],["et","eesti","Estonian"],["ee","eʋegbe","Ewe"],["ext","estremeñu","Extremaduran"],["fat","mfantse","Fanti"],["fo","føroyskt","Faroese"],["hif","Fiji Hindi","Fiji Hindi"],["fj","Na Vosa Vakaviti","Fijian"],["fi","suomi","Finnish"],["fon","fɔ̀ngbè","Fon"],["gur","farefare","Frafra"],["fr","français","French"],["fur","furlan","Friulian"],["ff","Fulfulde","Fula"],["gag","Gagauz","Gagauz"],["gl","galego","Galician"],["gan","贛語","Gan"],["lg","Luganda","Ganda"],["ka","ქართული","Georgian"],["de","Deutsch","German"],["gpe","Ghanaian Pidgin","Ghanaian Pidgin"],["glk","گیلکی","Gilaki"],["gom","गोंयची कोंकणी / Gõychi Konknni","Goan Konkani"],["gor","Bahasa Hulontalo","Gorontalo"],["got","𐌲𐌿𐍄𐌹𐍃𐌺","Gothic"],["el","Ελληνικά","Greek"],["gn","Avañe'ẽ","Guarani"],["gcr","kriyòl gwiyannen","Guianan Creole"],["gu","ગુજરાતી","Gujarati"],["guw","gungbe","Gun"],["ht","Kreyòl ayisyen","Haitian Creole"],["hak","客家語 / Hak-kâ-ngî","Hakka Chinese"],["ha","Hausa","Hausa"],["haw","Hawaiʻi","Hawaiian"],["he","עברית","Hebrew"],["hz","Otsiherero","Herero"],["hi","हिन्दी","Hindi"],["ho","Hiri Motu","Hiri Motu"],["hu","magyar","Hungarian"],["iba","Jaku Iban","Iban"],["is","íslenska","Icelandic"],["io","Ido","Ido"],["igl","Igala","Igala"],["ig","Igbo","Igbo"],["ilo","Ilokano","Iloko"],["smn","anarâškielâ","Inari Sami"],["id","Bahasa Indonesia","Indonesian"],["inh","гӀалгӀай","Ingush"],["ia","interlingua","Interlingua"],["ie","Interlingue","Interlingue"],["isv","medžuslovjansky","Interslavic"],["iu","ᐃᓄᒃᑎᑐᑦ / inuktitut","Inuktitut"],["ik","Iñupiatun","Inupiaq"],["ga","Gaeilge","Irish"],["it","italiano","Italian"],["jam","Patois","Jamaican Creole English"],["ja","日本語","Japanese"],["jv","Jawa","Javanese"],["kaj","Jju","Jju"],["kbd","адыгэбзэ","Kabardian"],["kbp","Kabɩyɛ","Kabiye"],["kab","Taqbaylit","Kabyle"],["kl","kalaallisut","Kalaallisut"],["xal","хальмг","Kalmyk"],["kn","ಕನ್ನಡ","Kannada"],["kr","kanuri","Kanuri"],["kaa","Qaraqalpaqsha","Kara-Kalpak"],["krc","къарачай-малкъар","Karachay-Balkar"],["kai","Karai-karai","Karekare"],["ks","کٲشُر","Kashmiri"],["csb","kaszëbsczi","Kashubian"],["kk","қазақша","Kazakh"],["km","ភាសាខ្មែរ","Khmer"],["ki","Gĩkũyũ","Kikuyu"],["rw","Ikinyarwanda","Kinyarwanda"],["kge","Kumoring","Komering"],["kv","коми","Komi"],["koi","перем коми","Komi-Permyak"],["kg","Kongo","Kongo"],["ko","한국어","Korean"],["avk","Kotava","Kotava"],["kj","Kwanyama","Kuanyama"],["ku","kurdî","Kurdish"],["kus","Kʋsaal","Kusaal"],["ky","кыргызча","Kyrgyz"],["lld","Ladin","Ladin"],["lad","Ladino","Ladino"],["lbe","лакку","Lak"],["lo","ລາວ","Lao"],["ltg","latgaļu","Latgalian"],["la","Latina","Latin"],["lv","latviešu","Latvian"],["lez","лезги","Lezghian"],["lij","Ligure","Ligurian"],["li","Limburgs","Limburgish"],["ln","lingála","Lingala"],["lfn","Lingua Franca Nova","Lingua Franca Nova"],["lzh","文言","Literary Chinese"],["lt","lietuvių","Lithuanian"],["olo","livvinkarjala","Livvi-Karelian"],["jbo","la .lojban.","Lojban"],["lmo","lombard","Lombard"],["nds","Plattdüütsch","Low German"],["nds-nl","Nedersaksies","Low Saxon"],["dsb","dolnoserbski","Lower Sorbian"],["lb","Lëtzebuergesch","Luxembourgish"],["mk","македонски","Macedonian"],["mad","Madhurâ","Madurese"],["mag","मगही","Magahi"],["mai","मैथिली","Maithili"],["mg","Malagasy","Malagasy"],["ms","Bahasa Melayu","Malay"],["ml","മലയാളം","Malayalam"],["mt","Malti","Maltese"],["mni","ꯃꯤꯇꯩ ꯂꯣꯟ","Manipuri"],["gv","Gaelg","Manx"],["mr","मराठी","Marathi"],["mh","Ebon","Marshallese"],["mzn","مازِرونی","Mazanderani"],["min","Minangkabau","Minangkabau"],["cdo","閩東語 / Mìng-dĕ̤ng-ngṳ̄","Mindong"],["xmf","მარგალური","Mingrelian"],["nan","閩南語 / Bân-lâm-gí","Minnan"],["mwl","Mirandés","Mirandese"],["mdf","мокшень","Moksha"],["mnw","ဘာသာမန်","Mon"],["mn","монгол","Mongolian"],["ary","الدارجة","Moroccan Arabic"],["mos","moore","Mossi"],["mus","Mvskoke","Muscogee"],["mi","Māori","Māori"],["nah","Nāhuatl","Nahuatl"],["na","Dorerin Naoero","Nauru"],["nv","Diné bizaad","Navajo"],["ppl","Nawat","Nawat"],["ng","Oshiwambo","Ndonga"],["nap","Napulitano","Neapolitan"],["ne","नेपाली","Nepali"],["new","नेपाल भाषा","Newari"],["nia","Li Niha","Nias"],["pcm","Naijá","Nigerian Pidgin"],["nrm","Nouormand","Norman"],["frr","Nordfriisk","Northern Frisian"],["lrc","لۊری شومالی","Northern Luri"],["se","davvisámegiella","Northern Sami"],["nso","Sesotho sa Leboa","Northern Sotho"],["no","norsk","Norwegian"],["nn","norsk nynorsk","Norwegian Nynorsk"],["nov","Novial","Novial"],["nup","Nupe","Nupe"],["ny","Chi-Chewa","Nyanja"],["nqo","ߒߞߏ","N’Ko"],["ann","Obolo","Obolo"],["oc","occitan","Occitan"],["or","ଓଡ଼ିଆ","Odia"],["ang","Ænglisc","Old English"],["om","Oromoo","Oromo"],["os","ирон","Ossetic"],["blk","ပအိုဝ်ႏဘာႏသာႏ","Pa'O"],["pwn","pinayuanan","Paiwan"],["pfl","Pälzisch","Palatine German"],["pi","पालि","Pali"],["pam","Kapampangan","Pampanga"],["pag","Pangasinan","Pangasinan"],["rsk","руски","Pannonian Rusyn"],["pap","Papiamentu","Papiamento"],["ps","پښتو","Pashto"],["pdc","Deitsch","Pennsylvania German"],["fa","فارسی","Persian"],["pcd","Picard","Picard"],["pms","Piemontèis","Piedmontese"],["pih","Norfuk / Pitkern","Pitcairn-Norfolk"],["pl","polski","Polish"],["pnt","Ποντιακά","Pontic"],["pt","português","Portuguese"],["pa","ਪੰਜਾਬੀ","Punjabi"],["qu","Runa Simi","Quechua"],["ro","română","Romanian"],["rm","rumantsch","Romansh"],["rn","ikirundi","Rundi"],["bxr","буряад","Russia Buriat"],["ru","русский","Russian"],["rue","русиньскый","Rusyn"],["szy","Sakizaya","Sakizaya"],["sm","Gagana Samoa","Samoan"],["sgs","žemaitėška","Samogitian"],["sg","Sängö","Sango"],["sa","संस्कृतम्","Sanskrit"],["sat","ᱥᱟᱱᱛᱟᱲᱤ","Santali"],["skr","سرائیکی","Saraiki"],["sc","sardu","Sardinian"],["stq","Seeltersk","Saterland Frisian"],["sco","Scots","Scots"],["gd","Gàidhlig","Scottish Gaelic"],["sr","српски / srpski","Serbian"],["sh","srpskohrvatski / српскохрватски","Serbo-Croatian"],["shn","တႆး","Shan"],["sn","chiShona","Shona"],["ii","ꆇꉙ","Sichuan Yi"],["scn","sicilianu","Sicilian"],["szl","ślůnski","Silesian"],["simple","Simple English","Simple English"],["sd","سنڌي","Sindhi"],["si","සිංහල","Sinhala"],["sk","slovenčina","Slovak"],["sl","slovenščina","Slovenian"],["so","Soomaaliga","Somali"],["azb","تۆرکجه","South Azerbaijani"],["nr","isiNdebele seSewula","South Ndebele"],["alt","алтай тил","Southern Altai"],["dga","Dagaare","Southern Dagaare"],["st","Sesotho","Southern Sotho"],["es","español","Spanish"],["srn","Sranantongo","Sranan Tongo"],["zgh","ⵜⴰⵎⴰⵣⵉⵖⵜ ⵜⴰⵏⴰⵡⴰⵢⵜ","Standard Moroccan Tamazight"],["su","Sunda","Sundanese"],["sw","Kiswahili","Swahili"],["ss","SiSwati","Swati"],["sv","svenska","Swedish"],["syl","ꠍꠤꠟꠐꠤ","Sylheti"],["shi","Taclḥit","Tachelhit"],["tl","Tagalog","Tagalog"],["ty","reo tahiti","Tahitian"],["tdd","ᥖᥭᥰ ᥖᥬᥲ ᥑᥨᥒᥰ","Tai Nuea"],["tg","тоҷикӣ","Tajik"],["tly","tolışi","Talysh"],["ta","தமிழ்","Tamil"],["roa-tara","tarandíne","Tarantino"],["trv","Seediq","Taroko"],["tt","татарча / tatarça","Tatar"],["te","తెలుగు","Telugu"],["tet","tetun","Tetum"],["th","ไทย","Thai"],["bo","བོད་ཡིག","Tibetan"],["tig","ትግሬ","Tigre"],["ti","ትግርኛ","Tigrinya"],["tpi","Tok Pisin","Tok Pisin"],["tok","toki pona","Toki Pona"],["to","lea faka-Tonga","Tongan"],["ts","Xitsonga","Tsonga"],["tn","Setswana","Tswana"],["tcy","ತುಳು","Tulu"],["tum","chiTumbuka","Tumbuka"],["tr","Türkçe","Turkish"],["tk","Türkmençe","Turkmen"],["tyv","тыва дыл","Tuvinian"],["tw","Twi","Twi"],["kcg","Tyap","Tyap"],["udm","удмурт","Udmurt"],["uk","українська","Ukrainian"],["hsb","hornjoserbsce","Upper Sorbian"],["ur","اردو","Urdu"],["ug","ئۇيغۇرچە / Uyghurche","Uyghur"],["uz","oʻzbekcha / ўзбекча","Uzbek"],["ve","Tshivenda","Venda"],["vec","vèneto","Venetian"],["vep","vepsän kel’","Veps"],["vi","Tiếng Việt","Vietnamese"],["rmy","romani čhib","Vlax Romani"],["vo","Volapük","Volapük"],["vro","võro","Võro"],["wa","walon","Walloon"],["war","Winaray","Waray"],["guc","wayuunaiki","Wayuu"],["cy","Cymraeg","Welsh"],["bdr","Bajau Sama","West Coast Bajau"],["vls","West-Vlams","West Flemish"],["hyw","Արեւմտահայերէն","Western Armenian"],["fy","Frysk","Western Frisian"],["mrj","кырык мары","Western Mari"],["pnb","پنجابی","Western Punjabi"],["wo","Wolof","Wolof"],["wuu","吴语","Wu"],["xh","isiXhosa","Xhosa"],["sah","саха тыла","Yakut"],["yi","ייִדיש","Yiddish"],["yo","Yorùbá","Yoruba"],["zea","Zeêuws","Zeelandic"],["za","Vahcuengh","Zhuang"],["zu","isiZulu","Zulu"]];
+var GT_CODES = ["ab","ace","af","ak","am","ar","as","awa","ay","az","ba","ban","bbc","be","bew","bg","bm","bn","br","bs","ca","ceb","ckb","co","crh","cs","cv","cy","da","de","din","dv","dz","ee","el","en","eo","es","et","eu","fa","ff","fi","fj","fr","fy","ga","gd","gl","gn","gom","gu","ha","haw","he","hi","hr","ht","hu","hy","id","ig","ilo","is","it","ja","ka","kk","km","kn","ko","ku","ky","la","lb","lg","li","lij","lmo","ln","lo","lt","ltg","lv","mai","mg","mi","min","mk","ml","mn","mr","ms","mt","my","ne","new","nl","no","nr","nso","ny","oc","om","or","pa","pag","pam","pap","pl","ps","pt","qu","rn","ro","ru","rw","sa","scn","sd","sg","shn","si","sk","sl","sm","sn","so","sq","sr","ss","st","su","sv","sw","szl","ta","te","tet","tg","th","ti","tk","tl","tn","tr","ts","tt","ug","uk","ur","uz","vi","xh","yi","yo","yue","zh","zu"];
+var GT_MAP = {"zh":"zh-CN"};
+var WIKI_CLOSED = ["aa","ak","cho","cr","ho","hz","ii","kj","kl","kr","lrc","mh","mus","na","ng","pih"];
+(function(){
+  var sel = document.getElementById("langSel");
+  if (!sel) return;
+  var cur = sel.value;
+  sel.innerHTML = "";
+  WIKI_LANGS.forEach(function(L){
+    if (WIKI_CLOSED.indexOf(L[0]) !== -1) return;
+    var o = document.createElement("option");
+    o.value = L[0];
+    o.textContent = (L[1] === L[2]) ? L[1] : L[1] + " (" + L[2] + ")";
+    sel.appendChild(o);
+  });
+  sel.value = cur;
+})();
 function host(){ return LANG + ".wikipedia.org"; }
 function apiUrl(params){
   var q = Object.keys(params).map(function(k){ return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]); }).join("&");
@@ -7806,7 +7827,8 @@ function bindLibCards(scope){
 function findLibrary(q){
   q = (q || "").toLowerCase().trim().replace(/\s+/g, " "); if (!q) return [];
   var STOP = { "the":1, "a":1, "an":1, "of":1, "in":1, "on":1, "and":1, "to":1 };
-  function core(s){ return s.toLowerCase().split(/[^a-z0-9]+/).filter(function(w){ return w && !STOP[w]; }).join(" "); }
+  var ROMAN = { "i":"1", "ii":"2", "iii":"3", "iv":"4", "v":"5", "vi":"6", "vii":"7", "viii":"8", "ix":"9", "x":"10", "xi":"11", "xii":"12" };
+  function core(s){ return s.toLowerCase().split(/[^a-z0-9]+/).filter(function(w){ return w && !STOP[w]; }).map(function(w){ return ROMAN[w] || w; }).join(" "); }
   var qCore = core(q), qWords = qCore.split(" ").filter(function(w){ return w; });
   var scored = [];
   LIBRARY.forEach(function(a){
@@ -7815,7 +7837,7 @@ function findLibrary(q){
     var score = -1;
     if (t === q) score = 100;
     else if (tCore && tCore === qCore) score = 96;
-    else if (t.indexOf(q) !== -1) score = 84;
+    else if (qCore && core(a.title.split(":")[0]).indexOf(qCore) !== -1) score = 84;
     else if (t.length > 3 && q.indexOf(t) !== -1) score = 80;
     else {
       var inTitle = qWords.filter(function(w){ return tWords.indexOf(w) !== -1; }).length;
@@ -7824,6 +7846,15 @@ function findLibrary(q){
       else if (qWords.length > 1 && inHay === qWords.length && inTitle > 0) score = 50 + inTitle;
       else if (qWords.length === 1 && inTitle === 1) score = 60;
       else if (qWords.length === 1 && inHay === 1) score = 30;
+    }
+    if (qCore){
+      var kwCore = core(a.keywords || "");
+      if (kwCore && (" " + kwCore + " ").indexOf(" " + qCore + " ") !== -1) score = Math.max(score, 78 + qWords.filter(function(w){ return core(a.title.split(":")[0]).split(" ").indexOf(w) !== -1; }).length);
+      else if (score === -1) {
+        var tokSet = {};
+        (tCore + " " + kwCore + " " + core(a.category || "")).split(" ").forEach(function(w){ if (w) tokSet[w] = 1; });
+        if (qWords.length && qWords.every(function(w){ return tokSet[w]; })) score = 46;
+      }
     }
     if (score >= 0) scored.push({ a: a, s: score });
   });
@@ -7859,6 +7890,7 @@ function showLibraryArticle(id){
   var rel = a.related.map(function(t){ return '<button type="button" data-topic="' + esc(t) + '">' + esc(t) + "</button>"; }).join("");
   readerBody.innerHTML =
     '<div class="reader-hero"><span class="badge badge-our">✓ Our Article — written for Pastloom</span><h1>' + esc(a.title) + '</h1><div class="wdesc">' + esc(a.category) + ' · Simple English · Our own article, not copied from Wikipedia</div></div>' +
+    '<div style="padding:14px 18px 0"><div style="background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px;max-width:860px;margin:0 auto"><label for="trSel" style="display:block;font-weight:700;margin-bottom:8px">🌐 Read in your language</label><select id="trSel" style="width:100%;max-width:420px;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:inherit;font:inherit"><option value="">Choose your language…</option></select><p style="margin:8px 0 0;font-size:.86rem;color:var(--ink-soft)">This article is written in English. Choose a language to open an automatic translation by Google Translate. Automatic translations can sometimes get historical names and dates wrong — for full accuracy, read the original English article.</p></div></div>' +
     (a.img ? '<figure class="artfig"><img src="' + esc(a.img.src) + '" alt="' + esc(a.img.alt || a.title) + '" /><figcaption>' + esc(a.img.cap || "") + '<span class="credit">Image: ' + (a.img.by ? esc(a.img.by) + ' · ' : "") + esc(a.img.lic || "") + (a.img.page ? ' · <a href="' + esc(a.img.page) + '" target="_blank" rel="noopener">Wikimedia Commons</a>' : "") + '</span></figcaption></figure>' : "") +
     '<div class="article"><h2>Simple explanation</h2>' + a.simple.map(function(p){ return "<p>" + esc(p) + "</p>"; }).join("") + "</div>" +
     '<div style="padding:0 18px"><div class="keyfacts" style="margin-left:auto;margin-right:auto"><h3>Key facts</h3><dl>' + facts + "</dl></div></div>" +
@@ -7871,6 +7903,21 @@ function showLibraryArticle(id){
     '<div class="report-panel" id="reportPanel"><div class="inner"><p style="margin-top:0"><strong>Tell us what is wrong</strong> — a wrong date, a spelling mistake, or anything unclear. Write it below, then send it by email or copy it.</p><textarea id="reportText" placeholder="Write the problem here…"></textarea><div class="row"><button type="button" class="mail" id="reportMail">Send by email</button><button type="button" class="copy" id="reportCopy">Copy my report</button><span id="reportMsg" style="align-self:center;color:var(--teal);font-weight:700"></span></div></div></div>' +
     '<div style="height:50px"></div>';
   applyFs();
+  var trSel = $("trSel");
+  if (trSel){
+    WIKI_LANGS.forEach(function(L){
+      if (L[0] === "en") return;
+      if (GT_CODES.indexOf(L[0]) === -1) return;
+      var o = document.createElement("option");
+      o.value = GT_MAP[L[0]] || L[0];
+      o.textContent = (L[1] === L[2]) ? L[1] : L[1] + " (" + L[2] + ")";
+      trSel.appendChild(o);
+    });
+    trSel.addEventListener("change", function(){
+      if (!this.value) return;
+      window.open("https://pastloom-github-io.translate.goog/pastloom/articles/" + a.id + ".html?_x_tr_sl=en&_x_tr_tl=" + this.value + "&_x_tr_hl=en", "_blank");
+    });
+  }
   var topics = readerBody.querySelectorAll("[data-topic]");
   for (var i = 0; i < topics.length; i++) topics[i].addEventListener("click", function(){ openTopic(this.getAttribute("data-topic")); });
   $("reportBtn").addEventListener("click", function(){ $("reportPanel").classList.toggle("open"); });
