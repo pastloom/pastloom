@@ -7859,7 +7859,7 @@ function showLibraryArticle(id){
   var rel = a.related.map(function(t){ return '<button type="button" data-topic="' + esc(t) + '">' + esc(t) + "</button>"; }).join("");
   readerBody.innerHTML =
     '<div class="reader-hero"><span class="badge badge-our">✓ Our Article — written for Pastloom</span><h1>' + esc(a.title) + '</h1><div class="wdesc">' + esc(a.category) + ' · Simple English · Our own article, not copied from Wikipedia</div></div>' +
-    (a.img ? '<figure class="artfig"><img src="' + esc(a.img.src) + '" alt="' + esc(a.img.alt || a.title) + '" /><figcaption>' + esc(a.img.cap || "") + '<span class="credit">Image: ' + (a.img.by ? esc(a.img.by) + ' · ' : "") + esc(a.img.lic || "") + ' · <a href="' + esc(a.img.page || "#") + '" target="_blank" rel="noopener">Wikimedia Commons</a></span></figcaption></figure>' : "") +
+    (a.img ? '<figure class="artfig"><img src="' + esc(a.img.src) + '" alt="' + esc(a.img.alt || a.title) + '" /><figcaption>' + esc(a.img.cap || "") + '<span class="credit">Image: ' + (a.img.by ? esc(a.img.by) + ' · ' : "") + esc(a.img.lic || "") + (a.img.page ? ' · <a href="' + esc(a.img.page) + '" target="_blank" rel="noopener">Wikimedia Commons</a>' : "") + '</span></figcaption></figure>' : "") +
     '<div class="article"><h2>Simple explanation</h2>' + a.simple.map(function(p){ return "<p>" + esc(p) + "</p>"; }).join("") + "</div>" +
     '<div style="padding:0 18px"><div class="keyfacts" style="margin-left:auto;margin-right:auto"><h3>Key facts</h3><dl>' + facts + "</dl></div></div>" +
     '<div class="article">' + secs + "</div>" +
