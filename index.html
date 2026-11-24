@@ -857,7 +857,7 @@ function showLibraryArticle(id){
     '<div class="sources-box"><h3>Sources</h3><ul>' + srcs + '</ul><p style="color:var(--ink-soft);font-size:.9rem">This article was written in our own words, using these sources for facts. Tap a source to check it.</p></div>' +
     '<div class="meta-dates"><span><strong>Source date:</strong> ' + LIB_DATE + '</span><span><strong>Reviewed:</strong> ' + (a.rev || LIB_DATE) + '</span><span><strong>Type:</strong> Our Article</span></div>' +
     '<div class="reader-foot" style="margin-top:18px"><button class="btn2" type="button" id="reportBtn">Report an error in this article</button></div>' +
-    '<div class="report-panel" id="reportPanel"><div class="inner"><p style="margin-top:0"><strong>Tell us what is wrong</strong> — a wrong date, a spelling mistake, or anything unclear. Write it below, then send it by email or copy it.</p><textarea id="reportText" placeholder="Write the problem here…"></textarea><div class="row"><button type="button" class="mail" id="reportMail">Send by email</button><button type="button" class="copy" id="reportCopy">Copy my report</button><span id="reportMsg" style="align-self:center;color:var(--teal);font-weight:700"></span></div></div></div>' +
+    '<div class="report-panel" id="reportPanel"><div class="inner"><p style="margin-top:0"><strong>Tell us what is wrong</strong> — a wrong date, a spelling mistake, or anything unclear. Write it below, then send it via the contact form — your report is copied for you, so you can paste it into the form — or copy it yourself.</p><textarea id="reportText" placeholder="Write the problem here…"></textarea><div class="row"><button type="button" class="mail" id="reportMail">Send via contact form</button><button type="button" class="copy" id="reportCopy">Copy my report</button><span id="reportMsg" style="align-self:center;color:var(--teal);font-weight:700"></span></div></div></div>' +
     '<div style="height:50px"></div>';
   applyFs();
   var trSel = $("trSel");
@@ -880,9 +880,10 @@ function showLibraryArticle(id){
   $("reportBtn").addEventListener("click", function(){ $("reportPanel").classList.toggle("open"); });
   $("reportMail").addEventListener("click", function(){
     var txt = $("reportText").value || "(no details written)";
-    var mailA = document.createElement("a");
-    mailA.href = "mailto:?subject=" + encodeURIComponent("Error report: " + a.title + " — Pastloom") + "&body=" + encodeURIComponent("Article: " + a.title + "\n\nProblem:\n" + txt);
-    document.body.appendChild(mailA); mailA.click(); mailA.remove();
+    var report = "Article: " + a.title + "\n\nProblem:\n" + txt;
+    function openForm(){ window.open("https://forms.gle/2MjiEPKseKa9a2fE9", "_blank"); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(report).then(openForm, openForm);
+    else { var ta = $("reportText"); var keep = ta.value; ta.value = report; ta.select(); try { document.execCommand("copy"); } catch(e){} ta.value = keep; openForm(); }
   });
   $("reportCopy").addEventListener("click", function(){
     var txt = "Error report — Article: " + a.title + "\nProblem: " + ($("reportText").value || "");
@@ -1340,10 +1341,12 @@ var TRUST_PAGES = {
     '<h2>Why Pastloom exists</h2>' +
     '<p>History is often written in hard language that puts readers off. Pastloom tries to make the past easy and interesting for everyone, in words anyone can follow — while always showing honestly which articles are ours and which come from Wikipedia.</p>',
   contact: '<h1>Contact</h1>' +
-    '<p>The best way to reach Pastloom is the <strong>Report an Error</strong> tool. It sits inside every article in Our Library.</p>' +
-    '<h2>How to send a message</h2>' +
-    '<ul><li>Open any article with the <strong>OUR ARTICLE</strong> badge.</li><li>Scroll to the bottom and tap <strong>“Report an error in this article”</strong>.</li><li>Write your message in the box.</li><li>Tap <strong>“Send by email”</strong> to send it from your own email app, or tap <strong>“Copy my report”</strong> and paste it wherever you like.</li></ul>' +
-    '<p>You can use the same tool for a correction, a question, or an idea for a new article — just say at the start what your message is about.</p>' +
+    '<p>The best way to reach Pastloom is our <strong>contact form</strong>. It takes less than a minute, and every message is read.</p>' +
+    '<p><a href="https://forms.gle/2MjiEPKseKa9a2fE9" target="_blank" rel="noopener"><strong>Open the contact form</strong></a></p>' +
+    '<h2>What you can write about</h2>' +
+    '<ul><li>A correction — something wrong or out of date in an article.</li><li>A question about Pastloom or about a history topic.</li><li>An idea for a new article you would like us to write.</li></ul>' +
+    '<h2>Found an error in one article?</h2>' +
+    '<p>Open the article and scroll to the bottom, where you will find <strong>“Report an error in this article”</strong>. Write your report there, copy it, and paste it into the contact form — that way we know exactly which article you mean.</p>' +
     '<p>We do not publish a personal email address on this page, and Pastloom will never ask for your password or payment details.</p>',
   editorial: '<h1>Editorial Policy</h1>' +
     '<p>This page explains, in simple words, how Pastloom articles are chosen, prepared and checked.</p>' +
@@ -1359,7 +1362,7 @@ var TRUST_PAGES = {
     '<ul><li>Every article in Our Library lists its sources at the bottom, with links, so anyone can check the facts for themselves.</li><li>We check facts against encyclopedias, museums, universities and other trusted references wherever we can.</li><li>External Source articles come from Wikipedia, written by its volunteer authors, and are shared under the <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA licence</a>. Every such article on Pastloom links to the original article and to the licence.</li><li>A source link shows where a fact was checked. It does not mean we agree with everything on that source’s page.</li></ul>',
   privacy: '<h1>Privacy Policy</h1>' +
     '<p>Pastloom is a simple reading website. It has no accounts and no sign-up.</p>' +
-    '<ul><li>We do not ask for your name, email address or password on this website, and we do not sell personal information.</li><li>This website does not run its own tracking or advertising cookies.</li><li>When you search or open an External Source article, your browser talks directly to Wikipedia to load the text and pictures. Wikipedia is run by the Wikimedia Foundation, and its own privacy policy applies to those requests.</li><li>The Report an Error tool sends nothing by itself. “Send by email” opens your own email app with your message ready, and “Copy my report” only copies text on your own device. Nothing is sent until you choose to send it.</li><li>The fonts on this site load from Google Fonts, which may receive the standard information your browser sends with such a request.</li></ul>' +
+    '<ul><li>We do not ask for your name, email address or password on this website, and we do not sell personal information.</li><li>This website does not run its own tracking or advertising cookies.</li><li>When you search or open an External Source article, your browser talks directly to Wikipedia to load the text and pictures. Wikipedia is run by the Wikimedia Foundation, and its own privacy policy applies to those requests.</li><li>The Report an Error tool sends nothing by itself. “Send via contact form” copies your report on your own device and opens our contact form in a new tab; nothing is sent until you paste it in and submit the form. The contact form is provided by Google Forms, and messages sent through it are handled under Google\'s privacy policy.</li><li>The fonts on this site load from Google Fonts, which may receive the standard information your browser sends with such a request.</li></ul>' +
     '<p>If this policy ever changes, the new version will be published on this page.</p>',
   terms: '<h1>Terms of Use</h1>' +
     '<ul><li>Pastloom is free to read, for learning and personal use.</li><li>Articles marked <strong>OUR ARTICLE</strong> are written by Pastloom. You may share links to them freely. If you quote them, please credit Pastloom and link back to the article.</li><li>Articles marked <strong>EXTERNAL SOURCE</strong> belong to their authors on Wikipedia and are available under the <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA licence</a>. If you reuse them, please follow that licence and credit the original article.</li><li>We work hard to keep facts correct, but history can be debated and mistakes can happen. For important school or work use, please check the sources listed with each article.</li><li>Please use this website kindly and lawfully.</li></ul>'
