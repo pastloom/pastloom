@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pastloom.github.io/pastloom/sitemap.xml
